@@ -3,7 +3,7 @@ import log from 'loglevel';
 import { ErrorMap } from '../cat-form-hint/cat-form-hint';
 import { DatepickerType } from './datepicker-type';
 import dayjs from './dayjs.config';
-import Datepicker, { getDatepickerOptions } from './vanillajs-datepicker.config';
+import Datepicker, { getDatepickerOptions } from './vanillajs-rangepicker.config';
 
 /**
  * Inputs are used to allow users to provide text input when the expected input
@@ -15,13 +15,15 @@ import Datepicker, { getDatepickerOptions } from './vanillajs-datepicker.config'
  * @part label - The label content.
  */
 @Component({
-  tag: 'cat-datepicker',
-  styleUrl: 'cat-datepicker.scss',
+  tag: 'cat-rangepicker',
+  styleUrl: 'cat-rangepicker.scss',
   shadow: true
 })
-export class CatDatepicker {
-  private input!: HTMLInputElement;
-  private catInput!: HTMLCatInputElement;
+export class CatRangepicker {
+  private inputFrom!: HTMLInputElement;
+  private inputTo!: HTMLInputElement;
+  private catInputFrom!: HTMLCatInputElement;
+  private catInputTo!: HTMLCatInputElement;
   private datepicker!: any;
 
   @Element() hostElement!: HTMLElement;
@@ -196,7 +198,7 @@ export class CatDatepicker {
    */
   @Method()
   async doFocus(options?: FocusOptions): Promise<void> {
-    this.input.focus(options);
+    // this.input.focus(options);
   }
 
   /**
@@ -205,7 +207,7 @@ export class CatDatepicker {
    */
   @Method()
   async doBlur(): Promise<void> {
-    this.input.blur();
+    // this.input.blur();
   }
 
   /**
@@ -213,7 +215,7 @@ export class CatDatepicker {
    */
   @Method()
   async doClick(): Promise<void> {
-    this.input.click();
+    // this.input.click();
   }
 
   /**
@@ -232,63 +234,107 @@ export class CatDatepicker {
   render() {
     return (
       <Host>
-        <cat-input
-          ref={el => (this.catInput = el as HTMLCatInputElement)}
-          requiredMarker={this.requiredMarker}
-          horizontal={this.horizontal}
-          autoComplete={this.autoComplete}
-          clearable={this.clearable}
-          disabled={this.disabled}
-          hint={this.hint}
-          icon={this.icon}
-          iconRight={!this.iconLeft}
-          identifier={this.identifier}
-          label={this.label}
-          labelHidden={this.labelHidden}
-          name={this.name}
-          placeholder={this.placeholder}
-          textPrefix={this.textPrefix}
-          textSuffix={this.textSuffix}
-          readonly={this.readonly}
-          required={this.required}
-          value={this.value}
-          errors={this.errors}
-          errorUpdate={this.errorUpdate}
-          nativeAttributes={this.nativeAttributes}
-          onCatChange={event => this.onCatChange(event)}
-          onCatFocus={event => this.onCatFocus(event.detail)}
-          onCatBlur={event => this.onCatBlur(event.detail)}
-        >
-          {this.hasSlottedLabel && (
-            <span slot="label">
-              <slot name="label"></slot>
-            </span>
-          )}
-          {this.hasSlottedHint && (
-            <span slot="hint">
-              <slot name="hint"></slot>
-            </span>
-          )}
-        </cat-input>
+        <div id="rangepicker-container">
+          <cat-input
+            ref={el => (this.catInputFrom = el as HTMLCatInputElement)}
+            requiredMarker={this.requiredMarker}
+            horizontal={this.horizontal}
+            autoComplete={this.autoComplete}
+            clearable={this.clearable}
+            disabled={this.disabled}
+            hint={this.hint}
+            icon={this.icon}
+            iconRight={!this.iconLeft}
+            identifier={this.identifier}
+            label={this.label}
+            labelHidden={this.labelHidden}
+            name={this.name}
+            placeholder={this.placeholder}
+            textPrefix={this.textPrefix}
+            textSuffix={this.textSuffix}
+            readonly={this.readonly}
+            required={this.required}
+            value={this.value}
+            errors={this.errors}
+            errorUpdate={this.errorUpdate}
+            nativeAttributes={this.nativeAttributes}
+            onCatChange={event => this.onCatChange(event)}
+            onCatFocus={event => this.onCatFocus(event.detail)}
+            onCatBlur={event => this.onCatBlur(event.detail)}
+          >
+            {this.hasSlottedLabel && (
+              <span slot="label">
+                <slot name="label"></slot>
+              </span>
+            )}
+            {this.hasSlottedHint && (
+              <span slot="hint">
+                <slot name="hint"></slot>
+              </span>
+            )}
+          </cat-input>
+          <span>to</span>
+          <cat-input
+            ref={el => (this.catInputTo = el as HTMLCatInputElement)}
+            requiredMarker={this.requiredMarker}
+            horizontal={this.horizontal}
+            autoComplete={this.autoComplete}
+            clearable={this.clearable}
+            disabled={this.disabled}
+            hint={this.hint}
+            icon={this.icon}
+            iconRight={!this.iconLeft}
+            identifier={this.identifier}
+            label={this.label}
+            labelHidden={this.labelHidden}
+            name={this.name}
+            placeholder={this.placeholder}
+            textPrefix={this.textPrefix}
+            textSuffix={this.textSuffix}
+            readonly={this.readonly}
+            required={this.required}
+            value={this.value}
+            errors={this.errors}
+            errorUpdate={this.errorUpdate}
+            nativeAttributes={this.nativeAttributes}
+            onCatChange={event => this.onCatChange(event)}
+            onCatFocus={event => this.onCatFocus(event.detail)}
+            onCatBlur={event => this.onCatBlur(event.detail)}
+          >
+            {this.hasSlottedLabel && (
+              <span slot="label">
+                <slot name="label"></slot>
+              </span>
+            )}
+            {this.hasSlottedHint && (
+              <span slot="hint">
+                <slot name="hint"></slot>
+              </span>
+            )}
+          </cat-input>
+        </div>
       </Host>
     );
   }
 
   componentDidLoad() {
     if (this.hostElement) {
-      const inputWrapper = this.catInput.shadowRoot?.querySelector('.input-wrapper') as HTMLElement;
-      const inputElement = inputWrapper.querySelector('input');
+      const inputFromWrapper = this.catInputFrom.shadowRoot?.querySelector('.input-wrapper') as HTMLElement;
+      const inputFromElement = inputFromWrapper.querySelector('input');
+      const inputToWrapper = this.catInputTo.shadowRoot?.querySelector('.input-wrapper') as HTMLElement;
+      const inputToElement = inputToWrapper.querySelector('input');
 
-      if (inputElement) {
-        this.input = inputElement;
+      if (inputFromElement && inputToElement) {
+        // this.input = inputFromElement;
       } else {
         log.error('[CatInput] Missing input element', this);
         return;
       }
 
-      this.datepicker = new Datepicker(inputElement, {
+      this.datepicker = new Datepicker(this.hostElement.shadowRoot, {
         ...getDatepickerOptions(this.type, this.value),
-        // container: inputWrapper,
+        container: inputFromWrapper,
+        inputs: [inputFromElement, inputToElement],
         maxDate: this.max,
         minDate: this.min,
         datesDisabled: this.datesDisabled,
@@ -310,25 +356,25 @@ export class CatDatepicker {
         this.datepicker.pickerElement.classList.add('weekly');
       }
 
-      this.input.addEventListener('show', this.handleWeekDays.bind(this));
-      this.input.addEventListener('changeDate', this.handleDateChange.bind(this) as EventListener);
-      this.input.addEventListener('changeMonth', this.handleWeekDays.bind(this));
-      this.input.addEventListener('changeView', this.handleWeekDays.bind(this));
-      this.input.addEventListener('keydown', this.focusAllWeekDays.bind(this));
+      // this.input.addEventListener('show', this.handleWeekDays.bind(this));
+      // this.input.addEventListener('changeDate', this.handleDateChange.bind(this) as EventListener);
+      // this.input.addEventListener('changeMonth', this.handleWeekDays.bind(this));
+      // this.input.addEventListener('changeView', this.handleWeekDays.bind(this));
+      // this.input.addEventListener('keydown', this.focusAllWeekDays.bind(this));
     }
   }
 
   disconnectedCallback() {
-    this.input.removeEventListener('show', this.handleWeekDays.bind(this));
-    this.input.removeEventListener('changeDate', this.handleDateChange.bind(this) as EventListener);
-    this.input.removeEventListener('changeMonth', this.handleWeekDays.bind(this));
-    this.input.removeEventListener('changeView', this.handleWeekDays.bind(this));
-    this.input.removeEventListener('keydown', this.focusAllWeekDays.bind(this));
+    // this.input.removeEventListener('show', this.handleWeekDays.bind(this));
+    // this.input.removeEventListener('changeDate', this.handleDateChange.bind(this) as EventListener);
+    // this.input.removeEventListener('changeMonth', this.handleWeekDays.bind(this));
+    // this.input.removeEventListener('changeView', this.handleWeekDays.bind(this));
+    // this.input.removeEventListener('keydown', this.focusAllWeekDays.bind(this));
   }
 
   private handleDateChange(event: CustomEvent) {
     this.selectAllWeekDays(event.detail.date);
-    this.value = this.input.value;
+    // this.value = this.input.value;
     this.catChange.emit();
   }
 
@@ -342,15 +388,15 @@ export class CatDatepicker {
     if (this.type !== 'week') {
       return;
     }
-    if (this.input?.value) {
-      const firstDayOfWeek = dayjs(date).startOf('isoWeek');
+    // if (this.input?.value) {
+    //   const firstDayOfWeek = dayjs(date).startOf('isoWeek');
 
-      if (!firstDayOfWeek.isSame(dayjs(date).startOf('day'))) {
-        this.datepicker.setDate(firstDayOfWeek.toDate());
-      } else {
-        this.addClassToAllWeekDays('selected');
-      }
-    }
+    //   if (!firstDayOfWeek.isSame(dayjs(date).startOf('day'))) {
+    //     this.datepicker.setDate(firstDayOfWeek.toDate());
+    //   } else {
+    //     this.addClassToAllWeekDays('selected');
+    //   }
+    // }
   }
 
   private focusAllWeekDays() {
@@ -384,7 +430,7 @@ export class CatDatepicker {
   }
 
   private onCatChange(event: unknown) {
-    this.value = this.input.value;
+    // this.value = this.input.value;
     this.catChange.emit(event as InputEvent);
   }
 

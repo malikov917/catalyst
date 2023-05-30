@@ -103,6 +103,7 @@
           <li><a href="#label">Label</a></li>
           <li><a href="#input">Input</a></li>
           <li><a href="#datepicker">Datepicker</a></li>
+          <li><a href="#rangepicker">Rangepicker</a></li>
           <li><a href="#notification">Notification</a></li>
           <li><a href="#pagination">Pagination</a></li>
           <li><a href="#radio">Radio</a></li>
@@ -724,6 +725,11 @@
           <cat-datepicker label="Year picker" text-prefix="prefix" text-suffix="suffix"></cat-datepicker>
         </section>
 
+        <section id="rangepicker">
+          <h2>Rangepicker</h2>
+          <cat-rangepicker type="date" clearable="true" a11y-label="ARIA" label="Date picker"></cat-rangepicker>
+        </section>
+
         <section id="notification">
           <h2>Notification</h2>
           <cat-button id="notification-trigger">Show Notifications</cat-button>
@@ -946,14 +952,18 @@
             <p class="cat-inline-flex">Hover Me (round)</p>
           </cat-tooltip>
           <h3>Async</h3>
-          <cat-tooltip id="async-tooltip" placement="bottom-end">
+          <cat-tooltip
+            id="async-tooltip"
+            placement="bottom-end"
+            content="this jhsf dklhsdlfkghsldkjfh ;jsdhfg;jskhdf;gkjshd f;gj khsdlfkjhsldkjfgh ;lskjfhg lskjhfg lksjhf glkjshdf; gjhs;fgjkh s;jfgh ;sjfhkg ;jsdhfg;kjsh dfg;iusn d;igun sd;iunb s;idubn;sidungb;siudhb;iusdh fg;ius ndtb;iusnd f;ibuns d;iuon s;dioun ;sidoun ;soiudgnb ;osun dtb;iusndt;bousd;ighns;idugnbls;iubvnl;iush g;iusah rg;iubn ariuvn bsadlibvfr sip;hvg isudhfg ;piusdb rv;iusb df;ihgvbsd;ifhgub glsdiufbv lsiduf ;isudnb vli;usbn dliubs d;fib sd;iugb ;lsiufbg lsiudfb glisudbfg;liusdbf ;iu bsd;flugbsdlifuhbsliduf sldib a tooltip"
+          >
             <p class="cat-inline-flex">Hover Me (async)</p>
           </cat-tooltip>
           <script>
-            const tooltipElem = document.getElementById('async-tooltip');
-            setInterval(() => {
-              tooltipElem.content = 'This is an async tooltip';
-            }, 1000);
+            // const tooltipElem = document.getElementById('async-tooltip');
+            // setInterval(() => {
+            //   tooltipElem.content = 'This is an async tooltip';
+            // }, 1000);
           </script>
         </section>
       </div>

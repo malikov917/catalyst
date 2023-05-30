@@ -10,6 +10,7 @@ import { DatepickerType } from "./components/cat-datepicker/datepicker-type";
 import { ErrorMap } from "./components/cat-form-hint/cat-form-hint";
 import { Placement } from "@floating-ui/dom";
 import { InputType } from "./components/cat-input/input-type";
+import { DatepickerType as DatepickerType1 } from "./components/cat-rangepicker/datepicker-type";
 import { CatSelectConnector, CatSelectMultipleTaggingValue, CatSelectTaggingValue, Item } from "./components/cat-select/cat-select";
 import { Observable } from "rxjs";
 import { CatSelectMultipleTaggingValue as CatSelectMultipleTaggingValue1, CatSelectTaggingValue as CatSelectTaggingValue1 } from "./components/cat-select/cat-select";
@@ -18,6 +19,7 @@ export { DatepickerType } from "./components/cat-datepicker/datepicker-type";
 export { ErrorMap } from "./components/cat-form-hint/cat-form-hint";
 export { Placement } from "@floating-ui/dom";
 export { InputType } from "./components/cat-input/input-type";
+export { DatepickerType as DatepickerType1 } from "./components/cat-rangepicker/datepicker-type";
 export { CatSelectConnector, CatSelectMultipleTaggingValue, CatSelectTaggingValue, Item } from "./components/cat-select/cat-select";
 export { Observable } from "rxjs";
 export { CatSelectMultipleTaggingValue as CatSelectMultipleTaggingValue1, CatSelectTaggingValue as CatSelectTaggingValue1 } from "./components/cat-select/cat-select";
@@ -767,6 +769,138 @@ export namespace Components {
         "value"?: string;
     }
     /**
+     * Inputs are used to allow users to provide text input when the expected input
+     * is short. As well as plain text, Input supports various types of text,
+     * including passwords and numbers.
+     */
+    interface CatRangepicker {
+        /**
+          * Hint for form autofill feature.
+         */
+        "autoComplete"?: string;
+        /**
+          * Clear the input.
+         */
+        "clear": () => Promise<void>;
+        /**
+          * Whether the input should show a clear button.
+         */
+        "clearable": boolean;
+        /**
+          * Dates that should be disabled inside the picker
+         */
+        "datesDisabled": Array<Date> | Array<string>;
+        /**
+          * Whether the input is disabled.
+         */
+        "disabled": boolean;
+        /**
+          * Programmatically remove focus from the input. Use this method instead of `input.blur()`.
+         */
+        "doBlur": () => Promise<void>;
+        /**
+          * Programmatically simulate a click on the input.
+         */
+        "doClick": () => Promise<void>;
+        /**
+          * Programmatically move focus to the input. Use this method instead of `input.focus()`.
+          * @param options An optional object providing options to control aspects of the focusing process.
+         */
+        "doFocus": (options?: FocusOptions) => Promise<void>;
+        /**
+          * Fine-grained control over when the errors are shown. Can be `false` to never show errors, `true` to show errors on blur, or a number to show errors on change with the given delay in milliseconds.
+         */
+        "errorUpdate": boolean | number;
+        /**
+          * The validation errors for this input. Will render a hint under the input with the translated error message(s) `error.${key}`. If an object is passed, the keys will be used as error keys and the values translation parameters. If the value is `true`, the input will be marked as invalid without any hints under the input.
+         */
+        "errors"?: boolean | string[] | ErrorMap;
+        /**
+          * The date format after picker selection.
+         */
+        "format": string;
+        /**
+          * Optional hint text(s) to be displayed with the input.
+         */
+        "hint"?: string | string[];
+        /**
+          * Whether the label is on top or left.
+         */
+        "horizontal": boolean;
+        /**
+          * The name of an icon to be displayed in the input.
+         */
+        "icon"?: string;
+        /**
+          * Display the icon on the left.
+         */
+        "iconLeft": boolean;
+        /**
+          * A unique identifier for the input.
+         */
+        "identifier"?: string;
+        /**
+          * The label for the input.
+         */
+        "label": string;
+        /**
+          * Visually hide the label, but still show it to assistive technologies like screen readers.
+         */
+        "labelHidden": boolean;
+        /**
+          * A maximum value for date, time and numeric values.
+         */
+        "max"?: number | string;
+        /**
+          * A minimum value for date, time and numeric values.
+         */
+        "min"?: number | string;
+        /**
+          * The name of the form control. Submitted with the form as part of a name/value pair.
+         */
+        "name"?: string;
+        /**
+          * Attributes that will be added to the native HTML input element.
+         */
+        "nativeAttributes"?: { [key: string]: string };
+        /**
+          * The placeholder text to display within the input.
+         */
+        "placeholder"?: string;
+        /**
+          * The value is not editable.
+         */
+        "readonly": boolean;
+        /**
+          * A value is required or must be check for the form to be submittable.
+         */
+        "required": boolean;
+        /**
+          * Whether the label need a marker to shown if the input is required or optional.
+         */
+        "requiredMarker": 'none' | 'required' | 'optional' | 'none!' | 'optional!' | 'required!';
+        /**
+          * A textual prefix to be displayed in the input.
+         */
+        "textPrefix"?: string;
+        /**
+          * A textual suffix to be displayed in the input.
+         */
+        "textSuffix"?: string;
+        /**
+          * Type of datepicker ('date', 'week', 'month', 'year').
+         */
+        "type": DatepickerType1;
+        /**
+          * The value of the control.
+         */
+        "value"?: string;
+        /**
+          * Whether the picker should show the week numbers.
+         */
+        "weekNumbers": boolean;
+    }
+    /**
      * An element to display scrollable content.
      */
     interface CatScrollable {
@@ -1291,6 +1425,10 @@ export interface CatRadioGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLCatRadioGroupElement;
 }
+export interface CatRangepickerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLCatRangepickerElement;
+}
 export interface CatScrollableCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLCatScrollableElement;
@@ -1468,6 +1606,17 @@ declare global {
         new (): HTMLCatRadioGroupElement;
     };
     /**
+     * Inputs are used to allow users to provide text input when the expected input
+     * is short. As well as plain text, Input supports various types of text,
+     * including passwords and numbers.
+     */
+    interface HTMLCatRangepickerElement extends Components.CatRangepicker, HTMLStencilElement {
+    }
+    var HTMLCatRangepickerElement: {
+        prototype: HTMLCatRangepickerElement;
+        new (): HTMLCatRangepickerElement;
+    };
+    /**
      * An element to display scrollable content.
      */
     interface HTMLCatScrollableElement extends Components.CatScrollable, HTMLStencilElement {
@@ -1585,6 +1734,7 @@ declare global {
         "cat-pagination": HTMLCatPaginationElement;
         "cat-radio": HTMLCatRadioElement;
         "cat-radio-group": HTMLCatRadioGroupElement;
+        "cat-rangepicker": HTMLCatRangepickerElement;
         "cat-scrollable": HTMLCatScrollableElement;
         "cat-select": HTMLCatSelectElement;
         "cat-select-demo": HTMLCatSelectDemoElement;
@@ -2343,6 +2493,133 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     /**
+     * Inputs are used to allow users to provide text input when the expected input
+     * is short. As well as plain text, Input supports various types of text,
+     * including passwords and numbers.
+     */
+    interface CatRangepicker {
+        /**
+          * Hint for form autofill feature.
+         */
+        "autoComplete"?: string;
+        /**
+          * Whether the input should show a clear button.
+         */
+        "clearable"?: boolean;
+        /**
+          * Dates that should be disabled inside the picker
+         */
+        "datesDisabled": Array<Date> | Array<string>;
+        /**
+          * Whether the input is disabled.
+         */
+        "disabled"?: boolean;
+        /**
+          * Fine-grained control over when the errors are shown. Can be `false` to never show errors, `true` to show errors on blur, or a number to show errors on change with the given delay in milliseconds.
+         */
+        "errorUpdate"?: boolean | number;
+        /**
+          * The validation errors for this input. Will render a hint under the input with the translated error message(s) `error.${key}`. If an object is passed, the keys will be used as error keys and the values translation parameters. If the value is `true`, the input will be marked as invalid without any hints under the input.
+         */
+        "errors"?: boolean | string[] | ErrorMap;
+        /**
+          * The date format after picker selection.
+         */
+        "format"?: string;
+        /**
+          * Optional hint text(s) to be displayed with the input.
+         */
+        "hint"?: string | string[];
+        /**
+          * Whether the label is on top or left.
+         */
+        "horizontal"?: boolean;
+        /**
+          * The name of an icon to be displayed in the input.
+         */
+        "icon"?: string;
+        /**
+          * Display the icon on the left.
+         */
+        "iconLeft"?: boolean;
+        /**
+          * A unique identifier for the input.
+         */
+        "identifier"?: string;
+        /**
+          * The label for the input.
+         */
+        "label"?: string;
+        /**
+          * Visually hide the label, but still show it to assistive technologies like screen readers.
+         */
+        "labelHidden"?: boolean;
+        /**
+          * A maximum value for date, time and numeric values.
+         */
+        "max"?: number | string;
+        /**
+          * A minimum value for date, time and numeric values.
+         */
+        "min"?: number | string;
+        /**
+          * The name of the form control. Submitted with the form as part of a name/value pair.
+         */
+        "name"?: string;
+        /**
+          * Attributes that will be added to the native HTML input element.
+         */
+        "nativeAttributes"?: { [key: string]: string };
+        /**
+          * Emitted when the input loses focus.
+         */
+        "onCatBlur"?: (event: CatRangepickerCustomEvent<FocusEvent>) => void;
+        /**
+          * Emitted when the value is changed.
+         */
+        "onCatChange"?: (event: CatRangepickerCustomEvent<InputEvent>) => void;
+        /**
+          * Emitted when the input received focus.
+         */
+        "onCatFocus"?: (event: CatRangepickerCustomEvent<FocusEvent>) => void;
+        /**
+          * The placeholder text to display within the input.
+         */
+        "placeholder"?: string;
+        /**
+          * The value is not editable.
+         */
+        "readonly"?: boolean;
+        /**
+          * A value is required or must be check for the form to be submittable.
+         */
+        "required"?: boolean;
+        /**
+          * Whether the label need a marker to shown if the input is required or optional.
+         */
+        "requiredMarker"?: 'none' | 'required' | 'optional' | 'none!' | 'optional!' | 'required!';
+        /**
+          * A textual prefix to be displayed in the input.
+         */
+        "textPrefix"?: string;
+        /**
+          * A textual suffix to be displayed in the input.
+         */
+        "textSuffix"?: string;
+        /**
+          * Type of datepicker ('date', 'week', 'month', 'year').
+         */
+        "type"?: DatepickerType1;
+        /**
+          * The value of the control.
+         */
+        "value"?: string;
+        /**
+          * Whether the picker should show the week numbers.
+         */
+        "weekNumbers"?: boolean;
+    }
+    /**
      * An element to display scrollable content.
      */
     interface CatScrollable {
@@ -2900,6 +3177,7 @@ declare namespace LocalJSX {
         "cat-pagination": CatPagination;
         "cat-radio": CatRadio;
         "cat-radio-group": CatRadioGroup;
+        "cat-rangepicker": CatRangepicker;
         "cat-scrollable": CatScrollable;
         "cat-select": CatSelect;
         "cat-select-demo": CatSelectDemo;
@@ -2988,6 +3266,12 @@ declare module "@stencil/core" {
              * A group of radio buttons.
              */
             "cat-radio-group": LocalJSX.CatRadioGroup & JSXBase.HTMLAttributes<HTMLCatRadioGroupElement>;
+            /**
+             * Inputs are used to allow users to provide text input when the expected input
+             * is short. As well as plain text, Input supports various types of text,
+             * including passwords and numbers.
+             */
+            "cat-rangepicker": LocalJSX.CatRangepicker & JSXBase.HTMLAttributes<HTMLCatRangepickerElement>;
             /**
              * An element to display scrollable content.
              */
