@@ -1,1 +1,27 @@
-@use './vanillajs-rangepicker';
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'sass:map';
+@use '../cat-datepicker/vanillajs-datepicker.scss';
+
+.cat-rangepicker {
+  display: flex;
+}
+
+// rangepicker vanillajs-rangepicker
+.datepicker-grid {
+  row-gap: 4px;
+
+  .datepicker-cell.today:not(.range) {
+    border-radius: cat-token('size.border.radius.m');
+  }
+}
+
+.datepicker-grid :nth-child(7n + 1) {
+  border-top-left-radius: cat-token('size.border.radius.m');
+  border-bottom-left-radius: cat-token('size.border.radius.m');
+}
+
+.datepicker-grid :nth-child(7n) {
+  border-top-right-radius: cat-token('size.border.radius.m');
+  border-bottom-right-radius: cat-token('size.border.radius.m');
+}

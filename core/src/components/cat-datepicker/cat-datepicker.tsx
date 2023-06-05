@@ -288,7 +288,7 @@ export class CatDatepicker {
 
       this.datepicker = new Datepicker(inputElement, {
         ...getDatepickerOptions(this.type, this.value),
-        // container: inputWrapper,
+        container: inputWrapper,
         maxDate: this.max,
         minDate: this.min,
         datesDisabled: this.datesDisabled,

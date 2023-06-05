@@ -234,7 +234,7 @@ export class CatRangepicker {
   render() {
     return (
       <Host>
-        <div id="rangepicker-container">
+        <div id="rangepicker-container" class="cat-rangepicker">
           <cat-input
             ref={el => (this.catInputFrom = el as HTMLCatInputElement)}
             requiredMarker={this.requiredMarker}
@@ -323,6 +323,7 @@ export class CatRangepicker {
       const inputFromElement = inputFromWrapper.querySelector('input');
       const inputToWrapper = this.catInputTo.shadowRoot?.querySelector('.input-wrapper') as HTMLElement;
       const inputToElement = inputToWrapper.querySelector('input');
+      const wrapper = this.hostElement.shadowRoot?.getElementById('rangepicker-container');
 
       if (inputFromElement && inputToElement) {
         // this.input = inputFromElement;
@@ -333,7 +334,7 @@ export class CatRangepicker {
 
       this.datepicker = new Datepicker(this.hostElement.shadowRoot, {
         ...getDatepickerOptions(this.type, this.value),
-        container: inputFromWrapper,
+        container: wrapper,
         inputs: [inputFromElement, inputToElement],
         maxDate: this.max,
         minDate: this.min,
@@ -341,15 +342,15 @@ export class CatRangepicker {
         prevArrow: '←',
         nextArrow: '→',
         weekNumbers: this.weekNumbers ? 1 : 0,
-        format: {
-          toValue: (dateStr: string | Date | number): Date =>
-            this.type === 'week' ? this.fromISOWeek(dateStr) : Datepicker.parseDate(dateStr, this.dateFormat),
-          toDisplay: (date: Date): string =>
-            this.type === 'week' ? this.toISOWeek(date).toString() : Datepicker.formatDate(date, this.dateFormat)
-        },
-        beforeShowDay: (date: Date) => (this.shouldHighlightAsToday(date) ? 'today' : null),
-        beforeShowMonth: (date: Date) => (this.shouldHighlightAsToday(date) ? 'today' : null),
-        beforeShowYear: (date: Date) => (this.shouldHighlightAsToday(date) ? 'today' : null)
+        // format: {
+        //   toValue: (dateStr: string | Date | number): Date =>
+        //     this.type === 'week' ? this.fromISOWeek(dateStr) : Datepicker.parseDate(dateStr, this.dateFormat),
+        //   toDisplay: (date: Date): string =>
+        //     this.type === 'week' ? this.toISOWeek(date).toString() : Datepicker.formatDate(date, this.dateFormat)
+        // },
+        // beforeShowDay: (date: Date) => (this.shouldHighlightAsToday(date) ? 'today' : null),
+        // beforeShowMonth: (date: Date) => (this.shouldHighlightAsToday(date) ? 'today' : null),
+        // beforeShowYear: (date: Date) => (this.shouldHighlightAsToday(date) ? 'today' : null)
       });
 
       if (this.type === 'week') {
