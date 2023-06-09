@@ -1,3 +1,5 @@
+jest.mock('../cat-i18n/cat-i18n-registry');
+
 import { newSpecPage } from '@stencil/core/testing';
 import { CatTimepicker } from '../cat-timepicker/cat-timepicker';
 import { CatSelect } from '../cat-select/cat-select';
@@ -31,7 +33,7 @@ describe('cat-timepicker', () => {
                     <div class="select-wrapper-inner">
                       <input aria-controls="select-listbox-cat-input-0" class="select-input" value="">
                     </div>
-                    <cat-button a11ylabel="select.open" aria-controls="select-listbox-cat-input-0" class="select-btn" icon="chevron-down-outlined" icononly="" size="s" tabindex="-1" variant="text"></cat-button>
+                    <cat-button a11ylabel="select.open" aria-controls="select-listbox-cat-input-0" class="select-btn" icon="$cat:select-open" icononly="" size="s" tabindex="-1" variant="text"></cat-button>
                   </div>
                 </div>
               </div>

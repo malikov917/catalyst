@@ -40,6 +40,7 @@ export interface RenderInfo {
     src?: string;
     round?: boolean;
     initials?: string;
+    icon?: string;
   };
 }
 
@@ -600,6 +601,7 @@ export class CatSelect {
                             label={item.render.label}
                             round={item.render.avatar.round}
                             src={item.render.avatar.src}
+                            icon={item.render.avatar.icon}
                             initials={item.render.avatar.initials ?? ''}
                           ></cat-avatar>
                         ) : null}
@@ -608,7 +610,7 @@ export class CatSelect {
                           <cat-button
                             size="xs"
                             variant="text"
-                            icon="16-cross"
+                            icon="$cat:select-clear"
                             iconOnly
                             a11yLabel={i18n.t('select.deselect')}
                             onClick={() => this.deselect(item.item.id)}
@@ -623,6 +625,7 @@ export class CatSelect {
                     label={this.state.selection[0].render.label}
                     round={this.state.selection[0].render.avatar.round}
                     src={this.state.selection[0].render.avatar.src}
+                    icon={this.state.selection[0].render.avatar.icon}
                     initials={this.state.selection[0].render.avatar.initials ?? ''}
                   ></cat-avatar>
                 ) : null}
@@ -642,7 +645,7 @@ export class CatSelect {
               </div>
               {this.state.isResolving && <cat-spinner></cat-spinner>}
               {this.invalid && (
-                <cat-icon icon="alert-circle-outlined" class="icon-suffix cat-text-danger" size="l"></cat-icon>
+                <cat-icon icon="$cat:input-error" class="icon-suffix cat-text-danger" size="l"></cat-icon>
               )}
               {(this.state.selection.length || this.state.term.length) &&
               !this.disabled &&
@@ -651,7 +654,7 @@ export class CatSelect {
                 <cat-button
                   id={`select-clear-btn-${this.id}`}
                   iconOnly
-                  icon="cross-circle-outlined"
+                  icon="$cat:input-close"
                   variant="text"
                   size="s"
                   a11yLabel={i18n.t('input.clear')}
@@ -661,7 +664,7 @@ export class CatSelect {
               {!this.state.isResolving && (
                 <cat-button
                   iconOnly
-                  icon="chevron-down-outlined"
+                  icon="$cat:select-open"
                   class={{ 'select-btn': true, 'select-btn-open': this.state.isOpen }}
                   variant="text"
                   size="s"
@@ -767,6 +770,7 @@ export class CatSelect {
                     label={item.render.label}
                     round={item.render.avatar.round}
                     src={item.render.avatar.src}
+                    icon={item.render.avatar.icon}
                     initials={item.render.avatar.initials ?? ''}
                   ></cat-avatar>
                 ) : null}
@@ -792,6 +796,7 @@ export class CatSelect {
                   label={item.render.label}
                   round={item.render.avatar.round}
                   src={item.render.avatar.src}
+                  icon={item.render.avatar.icon}
                   initials={item.render.avatar.initials ?? ''}
                 ></cat-avatar>
               ) : null}
