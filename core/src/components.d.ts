@@ -789,19 +789,6 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * Programmatically remove focus from the input. Use this method instead of `input.blur()`.
-         */
-        "doBlur": () => Promise<void>;
-        /**
-          * Programmatically simulate a click on the input.
-         */
-        "doClick": () => Promise<void>;
-        /**
-          * Programmatically move focus to the input. Use this method instead of `input.focus()`.
-          * @param options An optional object providing options to control aspects of the focusing process.
-         */
-        "doFocus": (options?: FocusOptions) => Promise<void>;
-        /**
           * Fine-grained control over when the errors are shown. Can be `false` to never show errors, `true` to show errors on blur, or a number to show errors on change with the given delay in milliseconds.
          */
         "errorUpdate": boolean | number;

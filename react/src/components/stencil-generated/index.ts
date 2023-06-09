@@ -23,6 +23,7 @@ export const CatLabel = /*@__PURE__*/createReactComponent<JSX.CatLabel, HTMLCatL
 export const CatPagination = /*@__PURE__*/createReactComponent<JSX.CatPagination, HTMLCatPaginationElement>('cat-pagination');
 export const CatRadio = /*@__PURE__*/createReactComponent<JSX.CatRadio, HTMLCatRadioElement>('cat-radio');
 export const CatRadioGroup = /*@__PURE__*/createReactComponent<JSX.CatRadioGroup, HTMLCatRadioGroupElement>('cat-radio-group');
+export const CatRangepicker = /*@__PURE__*/createReactComponent<JSX.CatRangepicker, HTMLCatRangepickerElement>('cat-rangepicker');
 export const CatScrollable = /*@__PURE__*/createReactComponent<JSX.CatScrollable, HTMLCatScrollableElement>('cat-scrollable');
 export const CatSelect = /*@__PURE__*/createReactComponent<JSX.CatSelect, HTMLCatSelectElement>('cat-select');
 export const CatSelectDemo = /*@__PURE__*/createReactComponent<JSX.CatSelectDemo, HTMLCatSelectDemoElement>('cat-select-demo');

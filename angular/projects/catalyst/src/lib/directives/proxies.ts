@@ -455,6 +455,43 @@ export declare interface CatRadioGroup extends Components.CatRadioGroup {
 
 
 @ProxyCmp({
+  inputs: ['autoComplete', 'clearable', 'datesDisabled', 'disabled', 'errorUpdate', 'errors', 'format', 'hint', 'horizontal', 'icon', 'iconLeft', 'identifier', 'label', 'labelHidden', 'max', 'min', 'name', 'nativeAttributes', 'placeholder', 'readonly', 'required', 'requiredMarker', 'textPrefix', 'textSuffix', 'value', 'weekNumbers'],
+  methods: ['clear']
+})
+@Component({
+  selector: 'cat-rangepicker',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['autoComplete', 'clearable', 'datesDisabled', 'disabled', 'errorUpdate', 'errors', 'format', 'hint', 'horizontal', 'icon', 'iconLeft', 'identifier', 'label', 'labelHidden', 'max', 'min', 'name', 'nativeAttributes', 'placeholder', 'readonly', 'required', 'requiredMarker', 'textPrefix', 'textSuffix', 'value', 'weekNumbers'],
+})
+export class CatRangepicker {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['catChange', 'catFocus', 'catBlur']);
+  }
+}
+
+
+export declare interface CatRangepicker extends Components.CatRangepicker {
+  /**
+   * Emitted when the value is changed.
+   */
+  catChange: EventEmitter<CustomEvent<InputEvent>>;
+  /**
+   * Emitted when the input received focus.
+   */
+  catFocus: EventEmitter<CustomEvent<FocusEvent>>;
+  /**
+   * Emitted when the input loses focus.
+   */
+  catBlur: EventEmitter<CustomEvent<FocusEvent>>;
+}
+
+
+@ProxyCmp({
   inputs: ['noOverflowX', 'noOverflowY', 'noOverscroll', 'noScrolledInit', 'noShadowX', 'noShadowY', 'scrolledBuffer']
 })
 @Component({

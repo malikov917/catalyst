@@ -108,11 +108,12 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part       | Description        |
-| ---------- | ------------------ |
-| `"label"`  | The label content. |
-| `"prefix"` | The text prefix.   |
-| `"suffix"` | The text suffix.   |
+| Part              | Description        |
+| ----------------- | ------------------ |
+| `"input-wrapper"` |                    |
+| `"label"`         | The label content. |
+| `"prefix"`        | The text prefix.   |
+| `"suffix"`        | The text suffix.   |
 
 
 ## Dependencies
@@ -120,6 +121,7 @@ Type: `Promise<void>`
 ### Used by
 
  - [cat-datepicker](../cat-datepicker)
+ - [cat-rangepicker](../cat-rangepicker)
 
 ### Depends on
 
@@ -134,6 +136,7 @@ graph TD;
   cat-button --> cat-icon
   cat-button --> cat-spinner
   cat-datepicker --> cat-input
+  cat-rangepicker --> cat-input
   style cat-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

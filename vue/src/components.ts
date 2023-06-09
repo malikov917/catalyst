@@ -234,6 +234,39 @@ export const CatRadioGroup = /*@__PURE__*/ defineContainer<JSX.CatRadioGroup>('c
 ]);
 
 
+export const CatRangepicker = /*@__PURE__*/ defineContainer<JSX.CatRangepicker>('cat-rangepicker', undefined, [
+  'requiredMarker',
+  'horizontal',
+  'autoComplete',
+  'clearable',
+  'disabled',
+  'hint',
+  'icon',
+  'iconLeft',
+  'identifier',
+  'label',
+  'labelHidden',
+  'max',
+  'min',
+  'name',
+  'placeholder',
+  'textPrefix',
+  'textSuffix',
+  'readonly',
+  'required',
+  'format',
+  'weekNumbers',
+  'datesDisabled',
+  'value',
+  'errors',
+  'errorUpdate',
+  'nativeAttributes',
+  'catChange',
+  'catFocus',
+  'catBlur'
+]);
+
+
 export const CatScrollable = /*@__PURE__*/ defineContainer<JSX.CatScrollable>('cat-scrollable', undefined, [
   'noShadowX',
   'noShadowY',

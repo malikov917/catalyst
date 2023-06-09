@@ -30,7 +30,7 @@ describe('cat-datepicker', () => {
                   </label>
                 </div>
                 <div class="input-container">
-                  <div class="input-wrapper">
+                  <div class="input-wrapper" part="input-wrapper">
                     <div class="input-inner-wrapper">
                       <input id="cat-input-0" type="text">
                    </div>

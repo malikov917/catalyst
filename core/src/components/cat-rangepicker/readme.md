@@ -39,8 +39,7 @@ including passwords and numbers.
 | `requiredMarker`             | `required-marker` | Whether the label need a marker to shown if the input is required or optional.                                                                                                                                                                                                                                                  | `"none!" \| "none" \| "optional!" \| "optional" \| "required!" \| "required"` | `'optional'`   |
 | `textPrefix`                 | `text-prefix`     | A textual prefix to be displayed in the input.                                                                                                                                                                                                                                                                                  | `string \| undefined`                                                         | `undefined`    |
 | `textSuffix`                 | `text-suffix`     | A textual suffix to be displayed in the input.                                                                                                                                                                                                                                                                                  | `string \| undefined`                                                         | `undefined`    |
-| `type`                       | `type`            | Type of datepicker ('date', 'week', 'month', 'year').                                                                                                                                                                                                                                                                           | `"date" \| "month" \| "week" \| "year"`                                       | `'date'`       |
-| `value`                      | `value`           | The value of the control.                                                                                                                                                                                                                                                                                                       | `string \| undefined`                                                         | `undefined`    |
+| `value`                      | --                | The value of the control.                                                                                                                                                                                                                                                                                                       | `undefined \| { start: string; end: string; }`                                | `undefined`    |
 | `weekNumbers`                | `week-numbers`    | Whether the picker should show the week numbers.                                                                                                                                                                                                                                                                                | `boolean`                                                                     | `true`         |
 
 
@@ -58,38 +57,6 @@ including passwords and numbers.
 ### `clear() => Promise<void>`
 
 Clear the input.
-
-#### Returns
-
-Type: `Promise<void>`
-
-
-
-### `doBlur() => Promise<void>`
-
-Programmatically remove focus from the input. Use this method instead of
-`input.blur()`.
-
-#### Returns
-
-Type: `Promise<void>`
-
-
-
-### `doClick() => Promise<void>`
-
-Programmatically simulate a click on the input.
-
-#### Returns
-
-Type: `Promise<void>`
-
-
-
-### `doFocus(options?: FocusOptions) => Promise<void>`
-
-Programmatically move focus to the input. Use this method instead of
-`input.focus()`.
 
 #### Returns
 
@@ -122,12 +89,12 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
-  cat-datepicker --> cat-input
+  cat-rangepicker --> cat-input
   cat-input --> cat-icon
   cat-input --> cat-button
   cat-button --> cat-icon
   cat-button --> cat-spinner
-  style cat-datepicker fill:#f9f,stroke:#333,stroke-width:4px
+  style cat-rangepicker fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

@@ -190,27 +190,27 @@ export class CatRangepicker {
    * @param options An optional object providing options to control aspects of
    * the focusing process.
    */
-  @Method()
-  async doFocus(options?: FocusOptions): Promise<void> {
-    // this.input.focus(options);
-  }
+  // @Method()
+  // async doFocus(options?: FocusOptions): Promise<void> {
+  //   // this.input.focus(options);
+  // }
 
   /**
    * Programmatically remove focus from the input. Use this method instead of
    * `input.blur()`.
    */
-  @Method()
-  async doBlur(): Promise<void> {
-    // this.input.blur();
-  }
+  // @Method()
+  // async doBlur(): Promise<void> {
+  //   // this.input.blur();
+  // }
 
   /**
    * Programmatically simulate a click on the input.
    */
-  @Method()
-  async doClick(): Promise<void> {
-    // this.input.click();
-  }
+  // @Method()
+  // async doClick(): Promise<void> {
+  //   // this.input.click();
+  // }
 
   /**
    * Clear the input.
@@ -228,7 +228,7 @@ export class CatRangepicker {
   render() {
     return (
       <Host>
-        <div id="rangepicker-container" class="cat-rangepicker">
+        <div class="cat-rangepicker">
           <cat-input
             class="cat-rangepicker-start"
             ref={el => (this.catInputFrom = el as HTMLCatInputElement)}
@@ -280,7 +280,7 @@ export class CatRangepicker {
             icon={this.icon}
             iconRight={!this.iconLeft}
             identifier={this.identifier}
-            label=""
+            label={this.label}
             labelHidden={this.labelHidden}
             name={this.name}
             placeholder={this.placeholder}
@@ -318,7 +318,7 @@ export class CatRangepicker {
       const inputFromElement = inputFromWrapper.querySelector('input');
       const inputToWrapper = this.catInputTo.shadowRoot?.querySelector('.input-wrapper') as HTMLElement;
       const inputToElement = inputToWrapper.querySelector('input');
-      const wrapper = this.hostElement.shadowRoot?.getElementById('rangepicker-container');
+      const wrapper = this.hostElement.shadowRoot?.querySelector('.cat-rangepicker');
 
       if (inputFromElement && inputToElement) {
         this.inputFrom = inputFromElement;
