@@ -1,27 +1,32 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 @use 'sass:map';
-@use '../cat-datepicker/vanillajs-datepicker.scss';
+@use './vanillajs-rangepicker';
 
 .cat-rangepicker {
   display: flex;
-}
 
-// rangepicker vanillajs-rangepicker
-.datepicker-grid {
-  row-gap: 4px;
+  & cat-input {
+    flex: 1 1 0px;
 
-  .datepicker-cell.today:not(.range) {
-    border-radius: cat-token('size.border.radius.m');
+    &::part(input-wrapper):focus-within {
+      z-index: 1;
+    }
+
+    &.cat-rangepicker-end {
+      margin-left: -1px;
+
+      &::part(input-wrapper) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+
+    &.cat-rangepicker-start {
+      &::part(input-wrapper) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
   }
-}
-
-.datepicker-grid :nth-child(7n + 1) {
-  border-top-left-radius: cat-token('size.border.radius.m');
-  border-bottom-left-radius: cat-token('size.border.radius.m');
-}
-
-.datepicker-grid :nth-child(7n) {
-  border-top-right-radius: cat-token('size.border.radius.m');
-  border-bottom-right-radius: cat-token('size.border.radius.m');
 }

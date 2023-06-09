@@ -1,9 +1,8 @@
 import { Component, Element, Event, EventEmitter, Host, Method, Prop, State, h } from '@stencil/core';
 import log from 'loglevel';
 import { ErrorMap } from '../cat-form-hint/cat-form-hint';
-import { DatepickerType } from './datepicker-type';
-import dayjs from './dayjs.config';
-import Datepicker, { getDatepickerOptions } from './vanillajs-rangepicker.config';
+import DateRangePicker, { getDatepickerOptions } from './vanillajs-rangepicker.config';
+import Datepicker from '../cat-datepicker/vanillajs-datepicker.config';
 
 /**
  * Inputs are used to allow users to provide text input when the expected input
@@ -138,11 +137,6 @@ export class CatRangepicker {
   @Prop() weekNumbers = true;
 
   /**
-   * Type of datepicker ('date', 'week', 'month', 'year').
-   */
-  @Prop() type: DatepickerType = 'date';
-
-  /**
    * Dates that should be disabled inside the picker
    */
   @Prop() datesDisabled!: Array<Date> | Array<string>;
@@ -150,7 +144,7 @@ export class CatRangepicker {
   /**
    * The value of the control.
    */
-  @Prop({ mutable: true }) value?: string;
+  @Prop({ mutable: true }) value?: { start: string; end: string };
 
   /**
    * The validation errors for this input. Will render a hint under the input
@@ -223,7 +217,7 @@ export class CatRangepicker {
    */
   @Method()
   async clear(): Promise<void> {
-    this.value = '';
+    this.value = { start: '', end: '' };
   }
 
   componentWillRender(): void {
@@ -236,6 +230,7 @@ export class CatRangepicker {
       <Host>
         <div id="rangepicker-container" class="cat-rangepicker">
           <cat-input
+            class="cat-rangepicker-start"
             ref={el => (this.catInputFrom = el as HTMLCatInputElement)}
             requiredMarker={this.requiredMarker}
             horizontal={this.horizontal}
@@ -254,7 +249,7 @@ export class CatRangepicker {
             textSuffix={this.textSuffix}
             readonly={this.readonly}
             required={this.required}
-            value={this.value}
+            value={this.value?.start}
             errors={this.errors}
             errorUpdate={this.errorUpdate}
             nativeAttributes={this.nativeAttributes}
@@ -273,8 +268,8 @@ export class CatRangepicker {
               </span>
             )}
           </cat-input>
-          <span>to</span>
           <cat-input
+            class="cat-rangepicker-end"
             ref={el => (this.catInputTo = el as HTMLCatInputElement)}
             requiredMarker={this.requiredMarker}
             horizontal={this.horizontal}
@@ -285,7 +280,7 @@ export class CatRangepicker {
             icon={this.icon}
             iconRight={!this.iconLeft}
             identifier={this.identifier}
-            label={this.label}
+            label=""
             labelHidden={this.labelHidden}
             name={this.name}
             placeholder={this.placeholder}
@@ -293,7 +288,7 @@ export class CatRangepicker {
             textSuffix={this.textSuffix}
             readonly={this.readonly}
             required={this.required}
-            value={this.value}
+            value={this.value?.end}
             errors={this.errors}
             errorUpdate={this.errorUpdate}
             nativeAttributes={this.nativeAttributes}
@@ -326,14 +321,15 @@ export class CatRangepicker {
       const wrapper = this.hostElement.shadowRoot?.getElementById('rangepicker-container');
 
       if (inputFromElement && inputToElement) {
-        // this.input = inputFromElement;
+        this.inputFrom = inputFromElement;
+        this.inputTo = inputToElement;
       } else {
         log.error('[CatInput] Missing input element', this);
         return;
       }
 
-      this.datepicker = new Datepicker(this.hostElement.shadowRoot, {
-        ...getDatepickerOptions(this.type, this.value),
+      this.datepicker = new DateRangePicker(this.hostElement.shadowRoot, {
+        ...getDatepickerOptions(),
         container: wrapper,
         inputs: [inputFromElement, inputToElement],
         maxDate: this.max,
@@ -342,96 +338,45 @@ export class CatRangepicker {
         prevArrow: '←',
         nextArrow: '→',
         weekNumbers: this.weekNumbers ? 1 : 0,
-        // format: {
-        //   toValue: (dateStr: string | Date | number): Date =>
-        //     this.type === 'week' ? this.fromISOWeek(dateStr) : Datepicker.parseDate(dateStr, this.dateFormat),
-        //   toDisplay: (date: Date): string =>
-        //     this.type === 'week' ? this.toISOWeek(date).toString() : Datepicker.formatDate(date, this.dateFormat)
-        // },
-        // beforeShowDay: (date: Date) => (this.shouldHighlightAsToday(date) ? 'today' : null),
-        // beforeShowMonth: (date: Date) => (this.shouldHighlightAsToday(date) ? 'today' : null),
-        // beforeShowYear: (date: Date) => (this.shouldHighlightAsToday(date) ? 'today' : null)
+        format: {
+          toValue: (dateStr: string | Date | number): Date => {
+            return Datepicker.parseDate(dateStr, this.dateFormat);
+          },
+          toDisplay: (date: Date): string => {
+            return Datepicker.formatDate(date, this.dateFormat);
+          }
+        }
       });
 
-      if (this.type === 'week') {
-        this.datepicker.pickerElement.classList.add('weekly');
+      if (this.value) {
+        this.datepicker.setDates(this.value?.start, this.value?.end);
       }
 
-      // this.input.addEventListener('show', this.handleWeekDays.bind(this));
-      // this.input.addEventListener('changeDate', this.handleDateChange.bind(this) as EventListener);
-      // this.input.addEventListener('changeMonth', this.handleWeekDays.bind(this));
-      // this.input.addEventListener('changeView', this.handleWeekDays.bind(this));
-      // this.input.addEventListener('keydown', this.focusAllWeekDays.bind(this));
+      this.inputFrom.addEventListener('changeDate', this.handleDateChange.bind(this) as EventListener);
+      this.inputTo.addEventListener('changeDate', this.handleDateChange.bind(this) as EventListener);
     }
   }
 
   disconnectedCallback() {
-    // this.input.removeEventListener('show', this.handleWeekDays.bind(this));
-    // this.input.removeEventListener('changeDate', this.handleDateChange.bind(this) as EventListener);
-    // this.input.removeEventListener('changeMonth', this.handleWeekDays.bind(this));
-    // this.input.removeEventListener('changeView', this.handleWeekDays.bind(this));
-    // this.input.removeEventListener('keydown', this.focusAllWeekDays.bind(this));
+    this.inputFrom.removeEventListener('changeDate', this.handleDateChange.bind(this) as EventListener);
+    this.inputTo.removeEventListener('changeDate', this.handleDateChange.bind(this) as EventListener);
   }
 
   private handleDateChange(event: CustomEvent) {
-    this.selectAllWeekDays(event.detail.date);
-    // this.value = this.input.value;
+    const [start, end] = this.datepicker.getDates();
+    this.value = {
+      start: Datepicker.formatDate(start, this.dateFormat),
+      end: Datepicker.formatDate(end, this.dateFormat)
+    };
     this.catChange.emit();
   }
 
-  private handleWeekDays(event: Event | Date) {
-    this.selectAllWeekDays(event);
-    this.focusAllWeekDays();
-  }
-
-  private selectAllWeekDays(event: Event | Date) {
-    const date = event instanceof Date ? event : (event as CustomEvent).detail?.date;
-    if (this.type !== 'week') {
-      return;
-    }
-    // if (this.input?.value) {
-    //   const firstDayOfWeek = dayjs(date).startOf('isoWeek');
-
-    //   if (!firstDayOfWeek.isSame(dayjs(date).startOf('day'))) {
-    //     this.datepicker.setDate(firstDayOfWeek.toDate());
-    //   } else {
-    //     this.addClassToAllWeekDays('selected');
-    //   }
-    // }
-  }
-
-  private focusAllWeekDays() {
-    const date = dayjs(this.datepicker.picker.viewDate);
-    if (this.type !== 'week' || !date) {
-      return;
-    }
-
-    const firstDayOfWeek = dayjs(date).startOf('isoWeek');
-
-    if (!firstDayOfWeek.isSame(dayjs(date).startOf('day'))) {
-      this.datepicker.setFocusedDate(firstDayOfWeek.toDate());
-    }
-
-    this.addClassToAllWeekDays('focused');
-  }
-
-  private addClassToAllWeekDays(className: string) {
-    let weekdaysCount = 7;
-    const pickerElement = this.datepicker.pickerElement as HTMLElement;
-    let selected = pickerElement.querySelector(`.datepicker-cell:not(.month):not(.year).${className}`);
-    while (weekdaysCount > 1) {
-      if (selected) {
-        selected = selected.nextElementSibling;
-        selected?.classList.add(className);
-        weekdaysCount--;
-      } else {
-        break;
-      }
-    }
-  }
-
   private onCatChange(event: unknown) {
-    // this.value = this.input.value;
+    const [start, end] = this.datepicker.getDates();
+    this.value = {
+      start: Datepicker.formatDate(start, this.dateFormat),
+      end: Datepicker.formatDate(end, this.dateFormat)
+    };
     this.catChange.emit(event as InputEvent);
   }
 
@@ -443,57 +388,15 @@ export class CatRangepicker {
     this.catBlur.emit(event);
   }
 
-  private shouldHighlightAsToday(date: Date) {
-    const now = new Date();
-    const isSameYear = now.getFullYear() === date.getFullYear();
-    const isSameMonth = now.getMonth() === date.getMonth();
-    const isSameDay = now.getDate() === date.getDate();
-    switch (this.type) {
-      case 'date':
-        return isSameYear && isSameMonth && isSameDay;
-      case 'week':
-        return isSameYear && this.toISOWeek(now) === this.toISOWeek(date);
-      case 'month':
-        return isSameYear && isSameMonth;
-      case 'year':
-        return isSameYear;
-      default:
-        return false;
-    }
-  }
-
   // ----- Date handling
 
   private get dateFormat(): string {
     const date = new Date(Date.UTC(3333, 10, 22));
     const dateStr = new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
-      month: this.type !== 'year' ? 'numeric' : undefined,
-      day: this.type === 'date' || this.type === 'week' ? 'numeric' : undefined
+      month: 'numeric',
+      day: 'numeric'
     }).format(date);
     return dateStr.replace('22', 'dd').replace('11', 'mm').replace('3333', 'yyyy');
-  }
-
-  private fromISOWeek(week: string | Date | number): Date {
-    if (typeof week === 'string' || typeof week === 'number') {
-      const weekNumber = parseInt(week.toString(), 10);
-      return isNaN(weekNumber) ? new Date() : this.fromISOWeekNumber(weekNumber);
-    }
-    return week;
-  }
-
-  private fromISOWeekNumber(weekNumber: number, year = new Date().getFullYear()): Date {
-    const refDate = new Date(Date.UTC(year, 0, 4)); // January 4th
-    const diffDays = (weekNumber - 1) * 7 - (refDate.getUTCDay() || 7) + 1;
-    const date = new Date(refDate);
-    date.setUTCDate(date.getUTCDate() + diffDays);
-    return date;
-  }
-
-  private toISOWeek(date: Date): number {
-    const currentDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    currentDate.setUTCDate(currentDate.getUTCDate() + 4 - (currentDate.getUTCDay() || 7));
-    const firstDayOfYear = new Date(Date.UTC(currentDate.getUTCFullYear(), 0, 1));
-    return Math.ceil(((currentDate.getTime() - firstDayOfYear.getTime()) / 86400000 + 1) / 7);
   }
 }

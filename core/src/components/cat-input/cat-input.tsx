@@ -298,6 +298,7 @@ export class CatInput {
         </div>
         <div class="input-container">
           <div
+            part="input-wrapper"
             class={{
               'input-wrapper': true,
               'input-round': this.round,

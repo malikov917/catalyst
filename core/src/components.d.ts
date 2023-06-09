@@ -10,7 +10,6 @@ import { DatepickerType } from "./components/cat-datepicker/datepicker-type";
 import { ErrorMap } from "./components/cat-form-hint/cat-form-hint";
 import { Placement } from "@floating-ui/dom";
 import { InputType } from "./components/cat-input/input-type";
-import { DatepickerType as DatepickerType1 } from "./components/cat-rangepicker/datepicker-type";
 import { CatSelectConnector, CatSelectMultipleTaggingValue, CatSelectTaggingValue, Item } from "./components/cat-select/cat-select";
 import { Observable } from "rxjs";
 import { CatSelectMultipleTaggingValue as CatSelectMultipleTaggingValue1, CatSelectTaggingValue as CatSelectTaggingValue1 } from "./components/cat-select/cat-select";
@@ -19,7 +18,6 @@ export { DatepickerType } from "./components/cat-datepicker/datepicker-type";
 export { ErrorMap } from "./components/cat-form-hint/cat-form-hint";
 export { Placement } from "@floating-ui/dom";
 export { InputType } from "./components/cat-input/input-type";
-export { DatepickerType as DatepickerType1 } from "./components/cat-rangepicker/datepicker-type";
 export { CatSelectConnector, CatSelectMultipleTaggingValue, CatSelectTaggingValue, Item } from "./components/cat-select/cat-select";
 export { Observable } from "rxjs";
 export { CatSelectMultipleTaggingValue as CatSelectMultipleTaggingValue1, CatSelectTaggingValue as CatSelectTaggingValue1 } from "./components/cat-select/cat-select";
@@ -888,13 +886,9 @@ export namespace Components {
          */
         "textSuffix"?: string;
         /**
-          * Type of datepicker ('date', 'week', 'month', 'year').
-         */
-        "type": DatepickerType1;
-        /**
           * The value of the control.
          */
-        "value"?: string;
+        "value"?: { start: string; end: string };
         /**
           * Whether the picker should show the week numbers.
          */
@@ -2607,13 +2601,9 @@ declare namespace LocalJSX {
          */
         "textSuffix"?: string;
         /**
-          * Type of datepicker ('date', 'week', 'month', 'year').
-         */
-        "type"?: DatepickerType1;
-        /**
           * The value of the control.
          */
-        "value"?: string;
+        "value"?: { start: string; end: string };
         /**
           * Whether the picker should show the week numbers.
          */

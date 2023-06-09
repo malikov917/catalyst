@@ -1,0 +1,33 @@
+@use '../cat-datepicker/vanillajs-datepicker.scss';
+
+.datepicker-grid {
+  row-gap: 4px;
+
+  .datepicker-cell.today:not(.range) {
+    border-radius: cat-token('size.border.radius.m');
+  }
+}
+
+.datepicker-grid :nth-child(7n + 1) {
+  border-top-left-radius: cat-token('size.border.radius.m');
+  border-bottom-left-radius: cat-token('size.border.radius.m');
+}
+
+.datepicker-grid :nth-child(7n) {
+  border-top-right-radius: cat-token('size.border.radius.m');
+  border-bottom-right-radius: cat-token('size.border.radius.m');
+}
+
+.datepicker-cell.range {
+  color: #{cat-token('color.theme.primary.text')};
+}
+
+.datepicker-cell.today:not(.selected):not(.disabled).range-start,
+.datepicker-cell.today:not(.selected):not(.disabled).range-end {
+  color: white;
+}
+
+.datepicker-cell.range-end:not(.selected):not(.disabled):hover,
+.datepicker-cell.range-start:not(.selected):not(.disabled):hover {
+  background-color: #{cat-token('color.theme.primary.bg')};
+}
